@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Hello Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f3f6fa;
+        }
+
+        .card {
+            position: relative;
+            width: 280px;
+            height: 160px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hello {
+            font-size: 2.3rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: 0.3s ease;
+        }
+
+        .cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4f7cff, #6fa8ff);
+            transition: transform 0.25s ease;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card" id="card">
+    <div class="hello" id="hello">Love you ❤ </div>
+    <div class="cover" id="cover"></div>
+</div>
+
+<script>
+    const card = document.getElementById("card");
+    const cover = document.getElementById("cover");
+    const hello = document.getElementById("hello");
+
+    card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+
+        // Move cover horizontally following cursor
+        const move = (x / rect.width) * 100;
+        cover.style.transform = `translateX(${move}%)`;
+
+        // Show hello text gradually
+        hello.style.opacity = 1;
+    });
+
+    card.addEventListener("mouseleave", () => {
+        cover.style.transform = "translateX(0%)";
+        hello.style.opacity = 0;
+    });
+</script>
+
+</body>
+</html>
